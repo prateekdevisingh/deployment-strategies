@@ -15,6 +15,8 @@ In this post, we are going to talk about the following strategies:
 # Recreate
 The recreate strategy is a dummy deployment which consists of shutting down version A then deploying version B after version A is turned off. This technique implies downtime of the service that depends on both shutdown and boot duration of the application.
 
+![deployment strategy decision diagram](recreate.gif)
+
 * Pros:
 
     * Easy to setup.
@@ -33,6 +35,8 @@ Parallelism, max batch size: Number of concurrent instances to roll out.
 Max surge: How many instances to add in addition of the current amount.
 Max unavailable: Number of unavailable instances during the rolling update procedure.
 
+![deployment strategy decision diagram](ramped.gif)
+
 * Pros:
 
     * Easy to set up.
@@ -48,6 +52,8 @@ Max unavailable: Number of unavailable instances during the rolling update proce
 # Blue/Green
 The blue/green deployment strategy differs from a ramped deployment, version B (green) is deployed alongside version A (blue) with exactly the same amount of instances. After testing that the new version meets all the requirements the traffic is switched from version A to version B at the load balancer level.
 
+![deployment strategy decision diagram](bluegreen.gif)
+
 * Pros:
 
     * Instant rollout/rollback.
@@ -62,6 +68,8 @@ The blue/green deployment strategy differs from a ramped deployment, version B (
 A canary deployment consists of gradually shifting production traffic from version A to version B. Usually the traffic is split based on weight. For example, 90 percent of the requests go to version A, 10 percent go to version B.
 
 This technique is mostly used when the tests are lacking or not reliable or if there is little confidence about the stability of the new release on the platform.
+
+![deployment strategy decision diagram](canary.gif)
   
 * Pros:
 
@@ -85,6 +93,8 @@ Here is a list of conditions that can be used to distribute traffic amongst the 
   * Technology support: browser version, screen size, operating system, etc.
   * Language
 
+![deployment strategy decision diagram](abtesting.gif)
+
 * Pros:
 
     * Several versions run in parallel.
@@ -98,6 +108,8 @@ Here is a list of conditions that can be used to distribute traffic amongst the 
 A shadow deployment consists of releasing version B alongside version A, fork version A’s incoming requests and send them to version B as well without impacting production traffic. This is particularly useful to test production load on a new feature. A rollout of the application is triggered when stability and performance meet the requirements.
 
 This technique is fairly complex to setup and needs special requirements, especially with egress traffic. For example, given a shopping cart platform, if you want to shadow test the payment service you can end-up having customers paying twice for their order. In this case, you can solve it by creating a mocking service that replicates the response from the provider.
+
+![deployment strategy decision diagram](shadow.gif)
 
 * Pros:
 
