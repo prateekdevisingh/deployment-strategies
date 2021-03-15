@@ -15,6 +15,8 @@ In this post, we are going to talk about the following strategies:
 # Recreate
 The recreate strategy is a dummy deployment which consists of shutting down version A then deploying version B after version A is turned off. This technique implies downtime of the service that depends on both shutdown and boot duration of the application.
 
+![deployment strategy decision diagram](recreate.gif)
+
 * Pros:
 
     * Easy to setup.
